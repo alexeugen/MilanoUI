@@ -29,21 +29,25 @@ window.onload = function() {
 
     let app = document.getElementById("app");
     app.addEventListener("click", function(){
-        let p = document.createElement("P");
-        p.innerText = "SUBSCRIBE";
-        let x = event.clientX;
-        let y = event.clientY + document.documentElement.scrollTop;
+        let q = localStorage.getItem("subscribed")
 
-        p.style.position = "absolute";
-        p.style.left = x + "px";
-        p.style.top = y + "px";
-
-        p.style.color = getRandomColor();
-
-        app.appendChild(p);
-        setTimeout(() => {
-            app.removeChild(p);
-        }, 3000);
+        if(!q) {
+            let p = document.createElement("P");
+            p.innerText = "SUBSCRIBE";
+            let x = event.clientX;
+            let y = event.clientY + document.documentElement.scrollTop;
+    
+            p.style.position = "absolute";
+            p.style.left = x + "px";
+            p.style.top = y + "px";
+    
+            p.style.color = getRandomColor();
+    
+            app.appendChild(p);
+            setTimeout(() => {
+                app.removeChild(p);
+            }, 3000);
+        }
     });
 
     let content = document.getElementById("content");
@@ -55,4 +59,39 @@ window.onload = function() {
         if(event.keyCode == 27)
             clearInterval(settedinterval);
     };
+
+    btnSubscribe.onclick = moveDown;
+
+    let buyCoffee = document.getElementById("buy-coffee");
+    buyCoffee.onclick = plimba;
 }
+
+function moveDown() {
+    var elem = document.getElementById("flashy-subscribe"); 
+    var pos = 40;
+    var id = setInterval(move, 10);
+    function move() {
+      if (pos == -150) {
+        clearInterval(id);
+      } else {
+        pos--; 
+        elem.style.top = pos + 'px'; 
+      }
+    }
+
+    localStorage.setItem("subscribed", true);
+  }
+
+  function plimba() {
+    var elem = document.getElementById("buy-coffee"); 
+    var pos = 0;
+    var id = setInterval(move, 10);
+    function move() {
+      if (pos == 150) {
+        clearInterval(id);
+      } else {
+        pos++; 
+        elem.style.marginTop = pos + 'px'; 
+      }
+    }
+  }

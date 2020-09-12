@@ -14122,18 +14122,22 @@ window.onload = function () {
   }, 3000);
   var app = document.getElementById("app");
   app.addEventListener("click", function () {
-    var p = document.createElement("P");
-    p.innerText = "SUBSCRIBE";
-    var x = event.clientX;
-    var y = event.clientY + document.documentElement.scrollTop;
-    p.style.position = "absolute";
-    p.style.left = x + "px";
-    p.style.top = y + "px";
-    p.style.color = getRandomColor();
-    app.appendChild(p);
-    setTimeout(function () {
-      app.removeChild(p);
-    }, 3000);
+    var q = localStorage.getItem("subscribed");
+
+    if (!q) {
+      var p = document.createElement("P");
+      p.innerText = "SUBSCRIBE";
+      var x = event.clientX;
+      var y = event.clientY + document.documentElement.scrollTop;
+      p.style.position = "absolute";
+      p.style.left = x + "px";
+      p.style.top = y + "px";
+      p.style.color = getRandomColor();
+      app.appendChild(p);
+      setTimeout(function () {
+        app.removeChild(p);
+      }, 3000);
+    }
   });
   var content = document.getElementById("content");
 
@@ -14144,7 +14148,43 @@ window.onload = function () {
   document.body.onkeydown = function (event) {
     if (event.keyCode == 27) clearInterval(settedinterval);
   };
+
+  btnSubscribe.onclick = moveDown;
+  var buyCoffee = document.getElementById("buy-coffee");
+  buyCoffee.onclick = plimba;
 };
+
+function moveDown() {
+  var elem = document.getElementById("flashy-subscribe");
+  var pos = 40;
+  var id = setInterval(move, 10);
+
+  function move() {
+    if (pos == -150) {
+      clearInterval(id);
+    } else {
+      pos--;
+      elem.style.top = pos + 'px';
+    }
+  }
+
+  localStorage.setItem("subscribed", true);
+}
+
+function plimba() {
+  var elem = document.getElementById("buy-coffee");
+  var pos = 0;
+  var id = setInterval(move, 10);
+
+  function move() {
+    if (pos == 150) {
+      clearInterval(id);
+    } else {
+      pos++;
+      elem.style.marginTop = pos + 'px';
+    }
+  }
+}
 
 /***/ }),
 /* 15 */
@@ -25654,6 +25694,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     item: {}
@@ -25673,6 +25723,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       axios.get('/api/posts').then(function (result) {
         _this.items = result.data;
       });
+    },
+    copyHtml: function copyHtml() {
+      var copyText = document.getElementById("flat");
+      /* Select the text field */
+
+      copyText.select();
+      /* Copy the text inside the text field */
+
+      document.execCommand("copy");
     }
   }
 });
@@ -25688,14 +25747,29 @@ var render = function() {
   return _c("div", { staticStyle: { height: "100%" } }, [
     _c("div", { staticClass: "_image" }),
     _vm._v(" "),
-    _c("div", { staticClass: "_data" }, [
+    _c("div", { staticClass: "_data", staticStyle: { overflow: "hidden" } }, [
       _c("h2", [_vm._v(_vm._s(_vm.item.title))]),
       _vm._v(" "),
       _vm._m(0),
       _vm._v(" "),
-      _c("div", { staticClass: "btn-copy btn-copy-html" }, [
-        _vm._v("\r\n            Copy HTML\r\n        ")
-      ]),
+      _c(
+        "div",
+        { staticClass: "btn-copy btn-copy-html", on: { click: _vm.copyHtml } },
+        [_vm._v("\r\n            Copy HTML\r\n        ")]
+      ),
+      _vm._v(" "),
+      _c(
+        "textarea",
+        {
+          staticStyle: { postion: "absolute" },
+          attrs: { id: _vm.item.title, cols: "30", rows: "10" }
+        },
+        [
+          _vm._v(
+            '<div class="col-md-2 col-sm-6 _links">\r\n <ul>\r\n <li><a href="#">Messenger</a></li>\r\n <li><a href="#">WhatsApp</a></li>\r\n </ul>\r\n </div>\r\n        '
+          )
+        ]
+      ),
       _vm._v(" "),
       _c("div", { staticClass: "btn-copy btn-copy-css" }, [
         _vm._v("\r\n            Copy CSS\r\n        ")
@@ -25985,7 +26059,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       alert.style.display = "block";
       this.error = str + "are required.";
       var timealert = setTimeout(function () {
-        alert.style.display = "none";
+        alert.parentNode.removeChild(alert);
       }, 3000);
     }
   }

@@ -12,10 +12,10 @@ class PostController extends Controller
     public function index()
     {
         return response()->json([
-            ['title' => 'Flat button', 'description' => 'A flat button'],
-            ['title' => 'Great button', 'description' => 'A great button'],
-            ['title' => 'Awesome button', 'description' => 'An awesome button'],
-            ['title' => 'Magnificent button', 'description' => 'A magnificent button']
+            ['title' => 'flat', 'description' => 'A flat button'],
+            ['title' => 'great', 'description' => 'A great button'],
+            ['title' => 'awesome', 'description' => 'An awesome button'],
+            ['title' => 'magnificent', 'description' => 'A magnificent button']
         ]);
     }
 }

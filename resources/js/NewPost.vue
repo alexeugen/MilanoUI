@@ -182,7 +182,7 @@
         let alert = document.getElementById("error-alert");
         alert.style.display = "block";
         this.error = str + "are required."
-        let timealert = setTimeout(function(){ alert.style.display = "none" }, 3000);
+        let timealert = setTimeout(function(){ alert.parentNode.removeChild(alert) }, 3000);
       }
     }
   }

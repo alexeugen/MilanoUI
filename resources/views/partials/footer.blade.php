@@ -19,7 +19,7 @@
             </div>
             <div class="col-md-4 col-sm-6 _links _pink_buy_coffee">
                 <ul>
-                    <li><a href="#">Buy me a coffee</a></li>
+                    <li id="buy-coffee"><a href="#">Buy me a coffee</a></li>
                 </ul>
             </div>
         </div>
